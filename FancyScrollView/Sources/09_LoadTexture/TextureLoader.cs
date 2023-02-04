@@ -47,7 +47,11 @@ namespace UnityEngine.UI.Extensions.Examples.FancyScrollViewExample09
                 {
                     yield return request.SendWebRequest();
 
+#if UNITY_2021_1_OR_NEWER
+                    if (request.result == UnityWebRequest.Result.ConnectionError)
+#else
                     if (request.isNetworkError)
+#endif
                     {
                         Debug.LogErrorFormat("Error: {0}", request.error);
                         yield break;
