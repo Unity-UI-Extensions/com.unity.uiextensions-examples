@@ -10,9 +10,6 @@ In this mode the Drag events are used to drag a line between two points, when th
 In this mode, each click starts a new line with the new line following the cursor until the next click. Pressing Escape or Right-Clicking stops drawing.
 The next click will continue drawing the line (to create separate lines, you will need to update to using segments rather than just points
 
-3: Follow
-In this mode, the selected object will follow the drawn line
-
 */
 
 using System.Collections.Generic;
@@ -22,7 +19,7 @@ using UnityEngine.UI.Extensions;
 
 public class DrawLine : MonoBehaviour, IDragHandler, IDropHandler, IPointerDownHandler, IPointerUpHandler
 {
-    public enum DemoMode { DragDraw, ClickDraw, Follow };
+    public enum DemoMode { DragDraw, ClickDraw };
 
     public UILineRenderer lineRenderer;
     public DemoMode SceneDemoMode = DemoMode.DragDraw;
