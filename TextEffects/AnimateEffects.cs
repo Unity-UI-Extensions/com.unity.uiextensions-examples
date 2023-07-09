@@ -1,4 +1,5 @@
-﻿namespace UnityEngine.UI.Extensions.Examples
+﻿#if !UNITY_2022_1_OR_NEWER
+namespace UnityEngine.UI.Extensions.Examples
 {
     public class AnimateEffects : MonoBehaviour
     {
@@ -49,3 +50,4 @@
         }
     }
 }
+#endif
