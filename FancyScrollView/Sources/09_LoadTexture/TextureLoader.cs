@@ -23,7 +23,11 @@ namespace UnityEngine.UI.Extensions.Examples.FancyScrollViewExample09
             static Loader instance;
 
             public static Loader Instance => instance ??
+#if UNITY_2023_1_OR_NEWER
+                (instance = FindFirstObjectByType<Loader>() ??
+#else
                 (instance = FindObjectOfType<Loader>() ??
+#endif
                     new GameObject(typeof(TextureLoader).Name).AddComponent<Loader>());
 
             public void Load(string url, Action<(string Url, Texture Texture)> onSuccess)
