@@ -8,7 +8,7 @@ The Unity UI Extensions are an extension project for the new Unity UI system whi
 
 For more info, here's a little introduction video for the project:
 
-> Seriously needs refreshing for the new world order 🤣
+> Seriously needs refreshing, We are up to Unity 6 now..  🤣
 
 [![View Intro Video](http://img.youtube.com/vi/njoIeE4akq0/0.jpg)](http://www.youtube.com/watch?v=njoIeE4akq0 "Unity UI Extensions intro video")
 
