@@ -37,11 +37,11 @@ namespace UnityEngine.UI.Extensions.Examples
         public InputField inputFieldMonths;
         public InputField inputFieldYears;
 
-        public Text dateText;
+        public TMPro.TMP_Text dateText;
 
-        private int daysSet;
-        private int monthsSet;
-        private int yearsSet;
+        private int daysSet = 1;
+        private int monthsSet = 1;
+        private int yearsSet = 1900;
 
         private void InitializeYears()
         {
@@ -57,7 +57,7 @@ namespace UnityEngine.UI.Extensions.Examples
 
                 GameObject clone = Instantiate(yearsButtonPrefab, yearsScrollingPanel);
                 clone.transform.localScale = new Vector3(1, 1, 1);
-                clone.GetComponentInChildren<Text>().text = "" + arrayYears[i];
+                clone.GetComponentInChildren<TMPro.TMP_Text>().text = "" + arrayYears[i];
                 clone.name = "Year_" + arrayYears[i];
                 clone.AddComponent<CanvasGroup>();
                 yearsButtons[i] = clone;
@@ -120,7 +120,7 @@ namespace UnityEngine.UI.Extensions.Examples
                         break;
                 }
 
-                clone.GetComponentInChildren<Text>().text = month;
+                clone.GetComponentInChildren<TMPro.TMP_Text>().text = month;
                 clone.name = "Month_" + months[i];
                 clone.AddComponent<CanvasGroup>();
                 monthsButtons[i] = clone;
@@ -136,7 +136,7 @@ namespace UnityEngine.UI.Extensions.Examples
             {
                 days[i] = i + 1;
                 GameObject clone = Instantiate(daysButtonPrefab, daysScrollingPanel);
-                clone.GetComponentInChildren<Text>().text = "" + days[i];
+                clone.GetComponentInChildren<TMPro.TMP_Text>().text = "" + days[i];
                 clone.name = "Day_" + days[i];
                 clone.AddComponent<CanvasGroup>();
                 daysButtons[i] = clone;
@@ -150,10 +150,31 @@ namespace UnityEngine.UI.Extensions.Examples
             InitializeMonths();
             InitializeDays();
 
-            //Yes Unity complains about this but it doesn't matter in this case.
-            monthsVerticalScroller = new UIVerticalScroller(monthCenter, monthCenter, monthsScrollRect, monthsButtons);
-            yearsVerticalScroller = new UIVerticalScroller(yearsCenter, yearsCenter, yearsScrollRect, yearsButtons);
-            daysVerticalScroller = new UIVerticalScroller(daysCenter, daysCenter, daysScrollRect, daysButtons);
+            // Create temporary GameObjects to hold the UIVerticalScroller components
+            GameObject monthsScrollerGO = new GameObject("MonthsScroller");
+            GameObject yearsScrollerGO = new GameObject("YearsScroller");
+            GameObject daysScrollerGO = new GameObject("DaysScroller");
+
+            // Add components using AddComponent instead of direct instantiation
+            monthsVerticalScroller = monthsScrollerGO.AddComponent<UIVerticalScroller>();
+            yearsVerticalScroller = yearsScrollerGO.AddComponent<UIVerticalScroller>();
+            daysVerticalScroller = daysScrollerGO.AddComponent<UIVerticalScroller>();
+
+            // Set the properties using the public accessors
+            monthsVerticalScroller.Center = monthCenter;
+            monthsVerticalScroller.ElementSize = monthCenter;
+            monthsVerticalScroller.ScrollRectComponent = monthsScrollRect;
+            monthsVerticalScroller.ArrayOfElements = monthsButtons;
+
+            yearsVerticalScroller.Center = yearsCenter;
+            yearsVerticalScroller.ElementSize = yearsCenter;
+            yearsVerticalScroller.ScrollRectComponent = yearsScrollRect;
+            yearsVerticalScroller.ArrayOfElements = yearsButtons;
+
+            daysVerticalScroller.Center = daysCenter;
+            daysVerticalScroller.ElementSize = daysCenter;
+            daysVerticalScroller.ScrollRectComponent = daysScrollRect;
+            daysVerticalScroller.ArrayOfElements = daysButtons;
 
             monthsVerticalScroller.Start();
             yearsVerticalScroller.Start();
@@ -162,9 +183,21 @@ namespace UnityEngine.UI.Extensions.Examples
 
         public void SetDate()
         {
-            daysSet = int.Parse(inputFieldDays.text) - 1;
-            monthsSet = int.Parse(inputFieldMonths.text) - 1;
-            yearsSet = int.Parse(inputFieldYears.text) - 1900;
+            if (!string.IsNullOrEmpty(inputFieldDays.text))
+            {
+                int.TryParse(inputFieldDays.text, out daysSet);
+                daysSet--;
+            }
+            if (!string.IsNullOrEmpty(inputFieldMonths.text))
+            {
+                int.TryParse(inputFieldMonths.text, out monthsSet);
+                monthsSet--;
+            }
+            if (!string.IsNullOrEmpty(inputFieldYears.text))
+            {
+                int.TryParse(inputFieldYears.text, out yearsSet);
+                yearsSet -= 1900;
+            }
 
             daysVerticalScroller.SnapToElement(daysSet);
             monthsVerticalScroller.SnapToElement(monthsSet);

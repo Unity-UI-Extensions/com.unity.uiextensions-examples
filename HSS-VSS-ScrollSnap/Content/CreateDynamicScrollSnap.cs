@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
@@ -56,6 +57,6 @@ public class CreateDynamicScrollSnap : MonoBehaviour
     private void SetHSSItemTest(GameObject prefab, string value)
     {
         prefab.gameObject.name = value;
-        prefab.GetComponentInChildren<UnityEngine.UI.Text>().text = value;
+        prefab.GetComponentInChildren<TMP_Text>().text = value;
     }
 }

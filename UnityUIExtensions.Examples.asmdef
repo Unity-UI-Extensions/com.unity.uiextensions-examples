@@ -1,7 +1,9 @@
 {
     "name": "UnityUIExtensions.examples",
+    "rootNamespace": "",
     "references": [
-        "GUID:cf414061cae3a954baf92763590f3127"
+        "GUID:cf414061cae3a954baf92763590f3127",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,5 +12,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }
