@@ -23,11 +23,7 @@ namespace UnityEngine.UI.Extensions.Examples.FancyScrollViewExample09
             static Loader instance;
 
             public static Loader Instance => instance ??
-#if UNITY_2023_1_OR_NEWER
                 (instance = FindFirstObjectByType<Loader>() ??
-#else
-                (instance = FindObjectOfType<Loader>() ??
-#endif
                     new GameObject(typeof(TextureLoader).Name).AddComponent<Loader>());
 
             public void Load(string url, Action<(string Url, Texture Texture)> onSuccess)
@@ -51,11 +47,7 @@ namespace UnityEngine.UI.Extensions.Examples.FancyScrollViewExample09
                 {
                     yield return request.SendWebRequest();
 
-#if UNITY_2020_1_OR_NEWER
                     if (request.result == UnityWebRequest.Result.ConnectionError)
-#else
-                    if (request.isNetworkError)
-#endif
                     {
                         Debug.LogErrorFormat("Error: {0}", request.error);
                         yield break;
@@ -63,7 +55,7 @@ namespace UnityEngine.UI.Extensions.Examples.FancyScrollViewExample09
 
                     onSuccess((
                         url,
-                        ((DownloadHandlerTexture) request.downloadHandler).texture
+                        ((DownloadHandlerTexture)request.downloadHandler).texture
                     ));
                 }
             }
